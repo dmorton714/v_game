@@ -349,3 +349,17 @@ def top_genre(genre):
     top_titles = genre_df.nlargest(20, 'total_sales')[['title', 'total_sales']]
     
     return top_titles
+
+
+def genre(df, target_year):
+    df['release_date'] = pd.to_datetime(df['release_date'])
+    df_filtered = df[df['release_date'].dt.year == target_year]
+    result = df_filtered.groupby(['release_date', 'genre'])['total_sales'].sum().reset_index()
+    result['release_date'] = result['release_date'].dt.year  
+    result = result.groupby(['release_date', 'genre'])['total_sales'].sum().reset_index()
+    return result
+
+for year in range(1971, 2024):
+    df_name = f"genre_{year}"
+    globals()[df_name] = genre(df, year)
+
