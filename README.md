@@ -61,3 +61,8 @@ Virtual Environment Commands
 | Activate | `source venv/bin/activate` | `source venv/Scripts/activate` |
 | Install | `pip install -r requirements.txt` | `pip install -r requirements.txt` |
 | Deactivate | `deactivate` | `deactivate` |
+
+|To Run In Docker|
+| --- | 
+| `docker build . --tag v_game:latest` |
+| `docker run -it -p 8888:8888 v_game:latest` |
