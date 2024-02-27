@@ -359,41 +359,6 @@ def genre(df, target_year):
     result = result.groupby(['release_date', 'genre'])['total_sales'].sum().reset_index()
     return result
 
-
-class VGAnalysis:
-    def __init__(self):
-        self.df = pd.read_csv('vgchartz-2024.csv')
-        self.df = cleaning(self.df)
-    
-    def assign_console_mfg(self):
-        categories = {
-            'nintendo': ['3DS', 'ds', 'Wii', 'WiiU', 'NS', 'GB', 'NES', 'SNES', 'GBC', 'N64'],
-            'pc': ['Linux', 'OSX', 'PC', 'Arc', 'All'],
-            'xbox': ['X360', 'XOne', 'Series'],
-            'sony': ['PS', 'PS2', 'PS3', 'PS4', 'PS5', 'PSP', 'PSV', 'PSN'],
-            'mobile': ['iOS', 'And'],
-            'sega': ['GG', 'MSD', 'MS', 'GEN', 'SCD'],
-            'atari': ['2600', '7800'],
-            'commodore': ['amig', 'C64'],
-            'other': ['Ouya', 'OR', 'ACPC', 'AST', 'ApII', 'PCE', 'ZXS', 'Lynx', 'NG', 'ZXS']
-        }
-
-        all_items = [item for sublist in categories.values() for item in sublist]
-
-        missing_items = check_missing_items(all_items, self.df['console'])
-
-        if missing_items:
-            print(f"Missing items: {missing_items}")
-        else:
-            print("All items are covered.")
-
-        conditions = [self.df['console'].isin(items) for items in categories.values()]
-        values = list(categories.keys())
-
-        self.df['console_mfg'] = np.select(conditions, values, default='unknown')
-
-if __name__ == '__main__':
-    for year in range(1971, 2024):
-        df_name = f"genre_{year}"
-        globals()[df_name] = genre(df, year)
-
+for year in range(1971, 2024):
+    df_name = f"genre_{year}"
+    globals()[df_name] = genre(df, year)
