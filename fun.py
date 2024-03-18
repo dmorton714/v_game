@@ -8,26 +8,14 @@ from sqlite3 import connect
 df = pd.read_csv('vgchartz-2024.csv')
 
 def cleaning(df):
-    # Create a copy of the DataFrame to avoid modifying the original
     df = df.copy()
-    
-    # Convert 'release_date' to datetime
     df['release_date'] = pd.to_datetime(df['release_date'])
-    
-    # Drop columns 'img' and 'last_update'
     df.drop(['img', 'last_update'], axis=1, inplace=True)
-    
-    # Drop rows where 'release_date' is NaN
     df = df.dropna(subset=['release_date'])
-    
-    # Fill NaN values with 0 in specified columns using .loc for the entire assignment
     columns_to_fill_zero = ['critic_score', 'total_sales', 'na_sales', 'jp_sales', 'pal_sales', 'other_sales']
     df.loc[:, columns_to_fill_zero] = df.loc[:, columns_to_fill_zero].fillna(0)
     
     return df
-
-
-
 
 df = cleaning(df)
 
