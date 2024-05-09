@@ -17,12 +17,15 @@ def cleaning(df):
     
     return df
 
+
 df = cleaning(df)
+
 
 def check_missing_items(all_items, df_column):
     all_items_lower = [item.lower().strip() for item in all_items]
     unique_values_lower = set(df_column.str.lower().str.strip().unique())
     return set(all_items_lower) - unique_values_lower
+
 
 def assign_console_mfg(df):
     categories = {
@@ -63,6 +66,7 @@ def filter_and_group_by_year(df, target_year):
     result = result.groupby(['release_date', 'console'])['total_sales'].sum().reset_index()
     return result
 
+
 for year in range(1971, 2024):
     df_name = f"sales_{year}"
     globals()[df_name] = filter_and_group_by_year(df, year)
@@ -72,18 +76,14 @@ def single_graph(date_range, console):
     
     df['release_date'] = pd.to_datetime(df['release_date'])
     
-    
     filtered_df = df[(df['release_date'].dt.year >= date_range[0]) & 
                      (df['release_date'].dt.year <= date_range[1]) & 
                      (df['console'] == console)]
 
-    
     sales_by_year = filtered_df.groupby(filtered_df['release_date'].dt.year)['total_sales'].sum().reset_index()
 
-    
     plt.figure(figsize=(10, 6))
-    
-    
+        
     plt.bar(sales_by_year['release_date'], sales_by_year['total_sales'], label='Total Sales')
     
     # Trend curve
@@ -94,7 +94,7 @@ def single_graph(date_range, console):
     p = np.poly1d(z)
 
     # Clip values below 0
-    trend_line = np.maximum(p(x), 0)  
+    trend_line = np.maximum(p(x), 0) 
     
     plt.plot(x, trend_line, 'r--', label='Trend Curve')
     
@@ -109,16 +109,13 @@ def single_graph(date_range, console):
 
 def stacked_graph(date_range, *consoles):
     
-    df['release_date'] = pd.to_datetime(df['release_date'])
-    
-    
+    df['release_date'] = pd.to_datetime(df['release_date'])  
+
     filtered_df = df[(df['release_date'].dt.year >= date_range[0]) & 
                      (df['release_date'].dt.year <= date_range[1]) & 
                      (df['console'].isin(consoles))]
-
     
     sales_by_year = filtered_df.groupby(['release_date', 'console'])['total_sales'].sum().reset_index()
-
     
     plt.figure(figsize=(12, 8))
     
@@ -130,7 +127,7 @@ def stacked_graph(date_range, *consoles):
         # Trend curve
         z = np.polyfit(x, y, 2)
         p = np.poly1d(z)
-         # Clip values below 0
+        # Clip values below 0
         trend_line = np.maximum(p(x), 0) 
         
         # Bar plot
@@ -149,19 +146,15 @@ def stacked_graph(date_range, *consoles):
     plt.show()
 
 
-
 def graph(date_range, *consoles):
    
     df['release_date'] = pd.to_datetime(df['release_date'])
     
-
     filtered_df = df[(df['release_date'].dt.year >= date_range[0]) & 
                      (df['release_date'].dt.year <= date_range[1]) & 
                      (df['console'].isin(consoles))]
 
-    
     sales_by_year = filtered_df.groupby(['release_date', 'console'])['total_sales'].sum().reset_index()
-
     
     plt.figure(figsize=(12, 8))
     
@@ -179,18 +172,15 @@ def graph(date_range, *consoles):
         cmap = plt.get_cmap('tab10')
         bar_color = cmap(i)
         darker_bar_color = tuple(c * 0.6 for c in bar_color)
-        
-        
+                
         plt.bar(x + i * 0.3, y, width=0.3, color=bar_color, label=f'Total Sales - {console}')
 
-        
         plt.plot(x, trend_line, '-', color=darker_bar_color, linewidth=2, label=f'Trend Curve - {console}', zorder=10)
 
     plt.xlabel('Year')
     plt.ylabel('Total Sales')
     plt.title(f'Total Sales Comparison of Consoles from {date_range[0]} to {date_range[1]}')
-    
-    
+      
     plt.legend()
     
     plt.show()
@@ -200,14 +190,11 @@ def graph(date_range, *consoles):
    
     df['release_date'] = pd.to_datetime(df['release_date'])
     
-
     filtered_df = df[(df['release_date'].dt.year >= date_range[0]) & 
                      (df['release_date'].dt.year <= date_range[1]) & 
                      (df['console'].isin(consoles))]
 
-    
     sales_by_year = filtered_df.groupby(['release_date', 'console'])['total_sales'].sum().reset_index()
-
     
     plt.figure(figsize=(12, 8))
     
@@ -225,18 +212,15 @@ def graph(date_range, *consoles):
         cmap = plt.get_cmap('tab10')
         bar_color = cmap(i)
         darker_bar_color = tuple(c * 0.6 for c in bar_color)
-        
-        
+           
         plt.bar(x + i * 0.3, y, width=0.3, color=bar_color, label=f'Total Sales - {console}')
 
-        
         plt.plot(x, trend_line, '-', color=darker_bar_color, linewidth=2, label=f'Trend Curve - {console}', zorder=10)
 
     plt.xlabel('Year')
     plt.ylabel('Total Sales')
     plt.title(f'Total Sales Comparison of Consoles from {date_range[0]} to {date_range[1]}')
-    
-    
+        
     plt.legend()
     
     plt.show()
@@ -245,6 +229,7 @@ def graph(date_range, *consoles):
 conn = connect(':memory:')
 
 df.to_sql("df", conn)
+
 
 def sql(a_string):
     return(pd.read_sql(a_string, conn))
@@ -346,6 +331,7 @@ def genre(df, target_year):
     result['release_date'] = result['release_date'].dt.year  
     result = result.groupby(['release_date', 'genre'])['total_sales'].sum().reset_index()
     return result
+
 
 for year in range(1971, 2024):
     df_name = f"genre_{year}"

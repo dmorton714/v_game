@@ -35,6 +35,10 @@ To replicate or contribute to this project, follow these steps:
 1. Clone the repository: `git clone https://github.com/your-username/your-project.git`
 2. Install the necessary dependencies: `pip install -r requirements.txt`
 3. Explore the Jupyter notebooks or scripts in the respective folders.
+4. 1_user.ipynb is a interactive notebook without code blocks. 
+5. test.ipynb is my learning book for adding new features. 
+6. fun.py is the function file used to run the user notebook 
+7. I have included a docker image to use if you dont wish to run locally on you base system. 
 
 ## Dependencies
 
