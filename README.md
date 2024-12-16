@@ -2,11 +2,15 @@
 
 ## Overview
 
-This project analyzes video game sales data to gain insights into various factors, including console sales throughout their life cycles, top developers, and more. The ultimate goal is to generate a data dashboard that presents key findings and visualizations.
+This project is an on going analyzes video game sales data to gain insights into various factors, including console sales throughout their life cycles, top developers, and more. The ultimate goal is to generate a data dashboard that presents key findings and visualizations.
+
+## Current state 
+The project is currently being worked on in the `final_working.ipynb` notebook. It has been converted to a class and will soon have a UI added to it. Tweaks on the plots are the next step to make them a bit more visually appealing. 
 
 ## Data
 
 The dataset used in this project contains information about video game sales, including details such as title, genre, publisher, developer, critic scores, total sales, release dates, and console information.
+[Data](https://www.kaggle.com/datasets/asaniczka/video-game-sales-2024)
 
 ## Project Structure
 
